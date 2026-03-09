@@ -13,17 +13,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+
+      - name: Setup Java (Нужно для Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build APK
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Build APK (Local)
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: npx eas-cli build --platform android --local --non-interactive --output=./app-release.apk
+        # Убираем --output, так как EAS кладет файл в папку по умолчанию, мы найдем его позже
+        run: eas build --platform android --profile preview --local --non-interactive
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: ./app-release.apk
+          path: ./*.apk
