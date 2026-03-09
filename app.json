@@ -33,7 +33,10 @@
     },
     "plugins": [
       "expo-sharing",
-      "expo-barcode-scanner"
+      "expo-barcode-scanner",
+      "expo-font",
+      "expo-video",
+      "expo-audio"
     ]
   }
 }
