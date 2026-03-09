@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "aqua-offline",
+    "name": "Aqua Friends",
     "slug": "aqua-offline",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mmdms.aquaoffline"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,11 +33,9 @@
       }
     },
     "plugins": [
-      "expo-sharing",
-      "expo-barcode-scanner",
+      "expo-camera",
       "expo-font",
-      "expo-video",
-      "expo-audio"
+      "expo-image-picker"
     ]
   }
 }
