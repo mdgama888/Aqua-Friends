@@ -1,28 +1,32 @@
 {
   "expo": {
-    "name": "Aqua Friends",
-    "slug": "aqua-offline",
-    "version": "1.0.0",
+    "name": "Aqua Friend",
+    "slug": "aqua-friend",
+    "version": "1.0.0",  // 👈 ДОБАВЛЕНО
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon.png",  // 👈 ДОБАВЛЕНО
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#001524"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mmdms.aquaoffline"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "monochromeImage": "./assets/android-icon-monochrome.png",
+        "backgroundColor": "#001524"  // 👈 ДОБАВЛЕНО
       },
-      "package": "com.mmdms.aquaoffline"
+      "package": "com.mmdms.aquaoffline",
+      "versionCode": 1  // 👈 ДОБАВЛЕНО
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,9 +37,14 @@
       }
     },
     "plugins": [
-      "expo-camera",
-      "expo-font",
-      "expo-image-picker"
+      "expo-sharing",
+      "expo-barcode-scanner",
+      [
+        "expo-image-picker",  // 👈 ДОБАВЛЕНО
+        {
+          "photosPermission": "Приложению нужен доступ к фото, чтобы отправлять их в чат."
+        }
+      ]
     ]
   }
 }
