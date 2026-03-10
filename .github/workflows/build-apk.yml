@@ -20,7 +20,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Setup Android SDK (КРИТИЧНО)
+      - name: Setup Android SDK (БЕЗ ЭТОГО НЕ СОБЕРЕТСЯ)
         uses: android-actions/setup-android@v3
 
       - name: Install dependencies
@@ -32,7 +32,7 @@ jobs:
       - name: Build APK (Local)
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        # Мы добавляем флаг --output, чтобы GitHub точно нашел файл
+        # Мы явно указываем путь вывода, чтобы GitHub нашел файл
         run: npx eas-cli build --platform android --profile preview --local --non-interactive --output=./app-release.apk
 
       - name: Upload APK
