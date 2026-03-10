@@ -2,12 +2,23 @@
   "expo": {
     "name": "Aqua Friends AI",
     "slug": "aqua-offline",
+    "owner": "mmdms",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "jsEngine": "hermes",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "bundleIdentifier": "com.mmdms.aquaoffline",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Нужен доступ к камере для видеозвонков и сканера QR.",
+        "NSMicrophoneUsageDescription": "Нужен доступ к микрофону для голосовых сообщений.",
+        "NSPhotoLibraryUsageDescription": "Доступ к галерее для отправки фото и видео."
+      }
     },
     "android": {
       "package": "com.mmdms.aquaoffline",
@@ -15,15 +26,31 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA", "RECORD_AUDIO", "USE_BIOMETRIC"]
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "USE_BIOMETRIC",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "NOTIFICATIONS"
+      ]
     },
     "plugins": [
       "expo-camera",
       "expo-font",
-      "expo-image-picker"
+      "expo-image-picker",
+      "expo-av",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Используйте FaceID для защиты ваших чатов."
+        }
+      ]
     ],
     "extra": {
-      "eas": { "projectId": "1924cc9d-9731-4ddc-84d7-c8a24dbcf0e5" }
+      "eas": {
+        "projectId": "1924cc9d-9731-4ddc-84d7-c8a24dbcf0e5"
+      }
     }
   }
 }
