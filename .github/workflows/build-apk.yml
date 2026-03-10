@@ -32,7 +32,7 @@ jobs:
       - name: Build APK (Local)
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        # Мы явно указываем путь для вывода, чтобы шаг Upload его нашел
+        # Добавляем флаг --output, чтобы точно знать, где лежит файл
         run: npx eas-cli build --platform android --profile preview --local --non-interactive --output=./app-release.apk
 
       - name: Upload APK
