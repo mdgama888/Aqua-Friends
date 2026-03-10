@@ -20,7 +20,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm ci --legacy-peer-deps
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
@@ -30,6 +30,9 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+
+      - name: Prebuild Android project
+        run: npx expo prebuild --clean
 
       - name: Create local.properties
         run: echo "sdk.dir=${{ env.ANDROID_HOME }}" > android/local.properties
