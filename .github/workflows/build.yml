@@ -1,0 +1,38 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'  # 👈 ДОБАВЛЕНО кэширование
+          
+      - name: Install dependencies
+        run: npm ci  # 👈 ИСПРАВЛЕНО на npm ci для точной установки
+        
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}  # 👈 Требуется добавить секрет в GitHub
+          
+      - name: Build Android APK with EAS
+        run: eas build -p android --profile preview --non-interactive  # 👈 ИСПРАВЛЕНО
+        
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: app-release.apk
