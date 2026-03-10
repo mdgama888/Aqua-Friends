@@ -8,7 +8,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,10 +24,14 @@
     "android": {
       "package": "com.mmdms.aquaoffline",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA", "RECORD_AUDIO", "USE_BIOMETRIC"]
+      "permissions": [
+        "CAMERA", 
+        "RECORD_AUDIO", 
+        "USE_BIOMETRIC"
+      ]
     },
     "extra": {
       "eas": {
