@@ -34,6 +34,36 @@ jobs:
       - name: Prebuild Android project
         run: npx expo prebuild --clean
 
+      # 👇 НОВЫЙ ШАГ - исправляет settings.gradle
+      - name: Fix settings.gradle
+        run: |
+          cat > android/settings.gradle << 'EOF'
+          pluginManagement {
+            def reactNativeGradlePlugin = new File(
+              providers.exec {
+                workingDir(rootDir)
+                commandLine("node", "--print", "require.resolve('@react-native/gradle-plugin/package.json', { paths: [require.resolve('react-native/package.json')] })")
+              }.standardOutput.asText.get().trim()
+            ).getParentFile().absolutePath
+            includeBuild(reactNativeGradlePlugin)
+            
+            repositories {
+              google()
+              mavenCentral()
+              gradlePluginPortal()
+            }
+          }
+
+          plugins {
+            id("com.facebook.react.settings")
+          }
+
+          rootProject.name = 'aqua-offline'
+
+          include ':app'
+          includeBuild(new File(rootProject.projectDir, '../node_modules/@react-native/gradle-plugin'))
+          EOF
+
       - name: Create local.properties
         run: echo "sdk.dir=${{ env.ANDROID_HOME }}" > android/local.properties
 
