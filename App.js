@@ -2,6 +2,7 @@
   "expo": {
     "name": "Aqua Friends",
     "slug": "aqua-offline",
+    "owner": "mmdms",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,17 +14,20 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mmdms.aquaoffline"
+      "bundleIdentifier": "com.mmdms.aquaoffline",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Доступ к камере для QR и видео.",
+        "NSMicrophoneUsageDescription": "Доступ к микрофону для аудио.",
+        "NSFaceIDUsageDescription": "Защита чатов FaceID."
+      }
     },
     "android": {
+      "package": "com.mmdms.aquaoffline",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mmdms.aquaoffline"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "permissions": ["CAMERA", "RECORD_AUDIO", "USE_BIOMETRIC"]
     },
     "extra": {
       "eas": {
@@ -31,14 +35,10 @@
       }
     },
     "plugins": [
-      "expo-local-authentication",
-      "expo-barcode-scanner",
       "expo-camera",
       "expo-font",
       "expo-image-picker",
-      "expo-av",
-      "expo-sharing",
-      "expo-blur"
+      "expo-local-authentication"
     ]
   }
 }
