@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mmdms.aquaoffline"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,11 +33,8 @@
       }
     },
     "plugins": [
-      "expo-sharing",
-      "expo-barcode-scanner",
-      "expo-font",
-      "expo-video",
-      "expo-audio"
+  "expo-barcode-scanner",
+  "expo-font"
     ]
   }
 }
