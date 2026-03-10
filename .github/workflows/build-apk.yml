@@ -18,15 +18,37 @@ jobs:
         with:
           node-version: '18'
 
-      # Шаг 1: Устанавливаем все зависимости
+      # Шаг 1: Сохраняем оригинальный app.json
+      - name: Backup original app.json
+        run: cp app.json app.json.original
+
+      # Шаг 2: Создаём минимальный app.json БЕЗ ПЛАГИНОВ
+      - name: Create minimal app.json
+        run: |
+          cat > app.json << 'EOF'
+          {
+            "expo": {
+              "name": "aqua-offline",
+              "slug": "aqua-offline",
+              "version": "1.0.0",
+              "orientation": "portrait",
+              "icon": "./assets/icon.png",
+              "userInterfaceStyle": "light",
+              "splash": {
+                "image": "./assets/splash-icon.png",
+                "resizeMode": "contain",
+                "backgroundColor": "#ffffff"
+              },
+              "android": {
+                "package": "com.mmdms.aquaoffline"
+              },
+              "plugins": []
+            }
+          }
+          EOF
+
       - name: Install dependencies
         run: npm install --legacy-peer-deps
-
-      # Шаг 2: Принудительно устанавливаем все Expo-модули (ЭТО РЕШИТ ПРОБЛЕМУ!)
-      - name: Install Expo modules
-        run: |
-          npx expo install expo expo-modules-core expo-modules-autolinking
-          npx expo install expo-barcode-scanner expo-font expo-av
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
@@ -37,13 +59,9 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      # Шаг 3: Очищаем кэш и создаём android проект
       - name: Prebuild Android project
-        run: |
-          npx expo prebuild --clean
-          ls -la android/
+        run: npx expo prebuild --clean
 
-      # Шаг 4: Создаём правильный settings.gradle
       - name: Fix settings.gradle
         run: |
           cat > android/settings.gradle << 'EOF'
