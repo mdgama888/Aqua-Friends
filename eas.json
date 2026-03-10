@@ -10,8 +10,10 @@
     },
     "preview": {
       "android": {
-        "buildType": "apk",
-        "gradleCommand": ":app:assembleRelease"
+        "buildType": "apk"
+      },
+      "node": {
+        "packageManager": "npm"
       },
       "env": {
         "APP_ENV": "preview"
