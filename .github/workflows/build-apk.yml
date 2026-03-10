@@ -20,6 +20,9 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
@@ -29,10 +32,11 @@ jobs:
       - name: Build APK (Local)
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas build --platform android --profile preview --local --non-interactive
+        # Мы явно указываем путь для вывода, чтобы шаг Upload его нашел
+        run: npx eas-cli build --platform android --profile preview --local --non-interactive --output=./app-release.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: ./*.apk
+          path: ./app-release.apk
