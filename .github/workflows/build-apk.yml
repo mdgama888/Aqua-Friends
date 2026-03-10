@@ -17,10 +17,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
 
+      # Шаг 1: Устанавливаем зависимости БЕЗ требования lock-файла
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
@@ -34,7 +34,7 @@ jobs:
       - name: Prebuild Android project
         run: npx expo prebuild --clean
 
-      # 👇 НОВЫЙ ШАГ - исправляет settings.gradle
+      # Шаг 2: Создаём правильный settings.gradle
       - name: Fix settings.gradle
         run: |
           cat > android/settings.gradle << 'EOF'
