@@ -1,40 +1,29 @@
 {
   "expo": {
-    "name": "aqua-offline",
+    "name": "Aqua Friends AI",
     "slug": "aqua-offline",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.mmdms.aquaoffline"
+      "bundleIdentifier": "com.mmdms.aquaoffline",
+      "supportsTablet": true
     },
     "android": {
+      "package": "com.mmdms.aquaoffline",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
       },
-      "package": "com.mmdms.aquaoffline"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "1924cc9d-9731-4ddc-84d7-c8a24dbcf0e5"
-      }
+      "permissions": ["CAMERA", "RECORD_AUDIO", "USE_BIOMETRIC"]
     },
     "plugins": [
-  "expo-barcode-scanner",
-  "expo-font"
-    ]
+      "expo-camera",
+      "expo-font",
+      "expo-image-picker"
+    ],
+    "extra": {
+      "eas": { "projectId": "1924cc9d-9731-4ddc-84d7-c8a24dbcf0e5" }
+    }
   }
 }
