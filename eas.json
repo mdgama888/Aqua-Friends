@@ -3,10 +3,8 @@
     "preview": {
       "android": {
         "buildType": "apk"
-      },
-      "node": {
-        "packageManager": "npm"
       }
-    }
+    },
+    "production": {}
   }
 }
