@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android APK with EAS
 
 on:
   push:
@@ -18,90 +18,26 @@ jobs:
         with:
           node-version: '18'
 
-      # Шаг 1: Сохраняем оригинальный app.json
-      - name: Backup original app.json
-        run: cp app.json app.json.original
-
-      # Шаг 2: Создаём минимальный app.json БЕЗ ПЛАГИНОВ
-      - name: Create minimal app.json
-        run: |
-          cat > app.json << 'EOF'
-          {
-            "expo": {
-              "name": "aqua-offline",
-              "slug": "aqua-offline",
-              "version": "1.0.0",
-              "orientation": "portrait",
-              "icon": "./assets/icon.png",
-              "userInterfaceStyle": "light",
-              "splash": {
-                "image": "./assets/splash-icon.png",
-                "resizeMode": "contain",
-                "backgroundColor": "#ffffff"
-              },
-              "android": {
-                "package": "com.mmdms.aquaoffline"
-              },
-              "plugins": []
-            }
-          }
-          EOF
-
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Setup Java JDK
-        uses: actions/setup-java@v4
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Build APK with EAS
+        run: eas build -p android --profile preview --non-interactive
 
-      - name: Prebuild Android project
-        run: npx expo prebuild --clean
-
-      - name: Fix settings.gradle
-        run: |
-          cat > android/settings.gradle << 'EOF'
-          pluginManagement {
-            def reactNativeGradlePlugin = new File(
-              providers.exec {
-                workingDir(rootDir)
-                commandLine("node", "--print", "require.resolve('@react-native/gradle-plugin/package.json', { paths: [require.resolve('react-native/package.json')] })")
-              }.standardOutput.asText.get().trim()
-            ).getParentFile().absolutePath
-            includeBuild(reactNativeGradlePlugin)
-            
-            repositories {
-              google()
-              mavenCentral()
-              gradlePluginPortal()
-            }
-          }
-
-          plugins {
-            id("com.facebook.react.settings")
-          }
-
-          rootProject.name = 'aqua-offline'
-
-          include ':app'
-          includeBuild(new File(rootProject.projectDir, '../node_modules/@react-native/gradle-plugin'))
-          EOF
-
-      - name: Create local.properties
-        run: echo "sdk.dir=${{ env.ANDROID_HOME }}" > android/local.properties
-
-      - name: Build APK
-        run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleRelease
+      - name: Download APK
+        uses: actions/download-artifact@v4
+        with:
+          name: app-release
+          path: ./
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: ./*.apk
