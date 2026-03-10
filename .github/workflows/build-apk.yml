@@ -18,9 +18,15 @@ jobs:
         with:
           node-version: '18'
 
-      # Шаг 1: Устанавливаем зависимости БЕЗ требования lock-файла
+      # Шаг 1: Устанавливаем все зависимости
       - name: Install dependencies
         run: npm install --legacy-peer-deps
+
+      # Шаг 2: Принудительно устанавливаем все Expo-модули (ЭТО РЕШИТ ПРОБЛЕМУ!)
+      - name: Install Expo modules
+        run: |
+          npx expo install expo expo-modules-core expo-modules-autolinking
+          npx expo install expo-barcode-scanner expo-font expo-av
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
@@ -31,10 +37,13 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      # Шаг 3: Очищаем кэш и создаём android проект
       - name: Prebuild Android project
-        run: npx expo prebuild --clean
+        run: |
+          npx expo prebuild --clean
+          ls -la android/
 
-      # Шаг 2: Создаём правильный settings.gradle
+      # Шаг 4: Создаём правильный settings.gradle
       - name: Fix settings.gradle
         run: |
           cat > android/settings.gradle << 'EOF'
